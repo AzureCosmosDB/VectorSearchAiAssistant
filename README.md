@@ -1,6 +1,6 @@
 # Vector Search & AI Assistant for Azure Cosmos DB for MongoDB vCore
 
-This solution is a series of samples that demonstrate how to build solutions that incorporate Azure Cosmos DB with Azure OpenAI to build vector search solutions with an AI assistant user interface. The solution shows hows to generate vectors on data stored in Azure Cosmos DB using Azure OpenAI, then shows how to implment vector search capabilities using a variety of different vector capable databases available from Azure Cosmos DB and Azure.
+This solution is a series of samples that demonstrate how to build solutions that incorporate Azure Cosmos DB with Azure OpenAI to build vector search solutions with an AI assistant user interface. The solution shows how to generate vectors on data stored in Azure Cosmos DB using Azure OpenAI, then shows how to implement vector search capabilities using a variety of different vector capable databases available from Azure Cosmos DB and Azure.
 
 The scenario for this sample centers around a consumer retail "Intelligent Agent" that allows users to ask questions on vectorized product, customer and sales order data stored in the database. The data in this solution is the [Cosmic Works](https://github.com/azurecosmosdb/cosmicworks) sample for Azure Cosmos DB. This data is an adapted subset of the Adventure Works 2017 dataset for a retail Bike Shop that sells bicycles, biking accessories, components and clothing.
 
@@ -34,13 +34,13 @@ There are two key elements of this solution, generating vectors and searching ve
 
 Vectors are generated in two Azure Functions contained in the Vectorize project, [Products](https://github.com/AzureCosmosDB/VectorSearchAiAssistant/blob/MongovCore/Vectorize/Products.cs) and [CustomersAndOrders](https://github.com/AzureCosmosDB/VectorSearchAiAssistant/blob/MongovCore/Vectorize/CustomersAndOrders.cs). Vector generation starts with the data loading for this solution which loads data into Azure Cosmos DB from JSON files stored in Azure Storage. The containers in Cosmos have change feed running on them. When the data is inserted, the Azure Function calls Azure OpenAI's embedding API and passes the entire document to it. The returned vectorized data, along with the source items are saved to Azure Cosmos DB for MongoDB vCore.
 
-You can see this at work by debugging Azure Functions remotely or running locally by setting a break point on [GenerateProductVectors() function](https://github.com/AzureCosmosDB/VectorSearchAiAssistant/blob/MongovCore/Vectorize/Products.cs#L52), [GenerateCustomerVectors() function](https://github.com/AzureCosmosDB/VectorSearchAiAssistant/blob/MongovCore/Vectorize/CustomersAndOrders.cs#L67) or [GenerateSalesOrderVectors() function](https://github.com/AzureCosmosDB/VectorSearchAiAssistant/blob/MongovCore/Vectorize/CustomersAndOrders.cs#L93)
+You can see this at work by debugging Azure Functions remotely or running locally by setting a breakpoint on [GenerateProductVectors() function](https://github.com/AzureCosmosDB/VectorSearchAiAssistant/blob/MongovCore/Vectorize/Products.cs#L52), [GenerateCustomerVectors() function](https://github.com/AzureCosmosDB/VectorSearchAiAssistant/blob/MongovCore/Vectorize/CustomersAndOrders.cs#L67) or [GenerateSalesOrderVectors() function](https://github.com/AzureCosmosDB/VectorSearchAiAssistant/blob/MongovCore/Vectorize/CustomersAndOrders.cs#L93)
 
 ## Searching vectors
 
 The web-based front-end for this solution provides users the means for searching the vectorized retail bike data for this solution. This work is centered around the [ChatService](https://github.com/AzureCosmosDB/VectorSearchAiAssistant/blob/MongovCore/Search/Services/ChatService.cs) in the Search project. In the chat UX a user starts a new chat session then types in a question. The text is sent to Azure OpenAI's embeddings API to generate vectors on it. The vectors are then used to perform a vector search on Azure Cosmos DB for MongoDB vCore. The query response which includes the original source data is sent to Azure OpenAI to generate a completion which is then passed back to the user as a response.
 
-You can see this at work by debugging the Azure Web App remotely or running locally. Set a break point on [GetChatCompletionAsync()](https://github.com/AzureCosmosDB/VectorSearchAiAssistant/blob/MongovCore/Search/Services/ChatService.cs#L114), then step through each of the function calls to see each step in action.
+You can see this at work by debugging the Azure Web App remotely or running locally. Set a breakpoint on [GetChatCompletionAsync()](https://github.com/AzureCosmosDB/VectorSearchAiAssistant/blob/MongovCore/Search/Services/ChatService.cs#L114), then step through each of the function calls to see each step in action.
 
 
 ## Getting Started
@@ -80,7 +80,7 @@ The data for this solution must be loaded once it has been deployed. This proces
 1. Open the file using any text editor.
 1. Open the Azure Cosmos DB blade in the resource group for this solution.
 1. Navigate to the Keys blade in Azure Portal and copy the Primary Connection String for the Azure Cosmos DB for NoSQL account.
-1. Paste the connection string to replace to placeholders called `ADD-COSMOS-CONNECTION-STRING`. Save the file.
+1. Paste the connection string to replace the placeholders called `ADD-COSMOS-CONNECTION-STRING`. Save the file.
 1. Run dmt.exe
 1. You can watch Azure Functions processing the data by navigating to each of the Azure Functions in the portal. **Note:** you will need to enable Logging for the Azure Functions in the portal when first accessing the Functions Logs.
 
@@ -102,7 +102,7 @@ Here are some sample questions you can ask:
 
 ### Real-time add and remove data
 
-One great reason about using an operational database like Azure Cosmos DB as your source for data to be vectorized and search is that you can leverage its
+One great reason for using an operational database like Azure Cosmos DB as your source for data to be vectorized and searched is that you can leverage its
 Change Feed capability to dynamically add and remove products to the vector data which is searched. The steps below can demonstrate this capability.
 
 #### Steps to demo adding and removing data from vector search
